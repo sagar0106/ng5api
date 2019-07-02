@@ -6,6 +6,7 @@
 
     function list(entity, options, body, cb) {
         options = options || {};
+        options.where  = options.where ? JSON.parse(options.where) : {};
         entity.count(options.where, function(err, count) {
             if (err) {
                 cb(err, count);
@@ -28,7 +29,7 @@
 
     function one(entity, options, body, cb) {
         options = options || {};
-        entity.findById(options).populate(body.populate).exec(function(err, data) {
+        entity.findById(options).exec(function(err, data) {
             cb(err, data);
         })
     }

@@ -28,7 +28,7 @@
 
     function getById(req, res, next) {
         console.log();
-        crud.one(Entity, req.params.id, { populate: 'toDo' }, function(err, data) {
+        crud.one(Entity, req.params.id, { }, function(err, data) {
             if (err) {
                 return next(err);
             }

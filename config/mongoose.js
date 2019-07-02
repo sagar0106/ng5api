@@ -6,7 +6,7 @@
 
     module.exports = function() {
 
-        var dbUrl = 'mongodb://localhost/testDb';
+        var dbUrl = 'mongodb://localhost/banas';
         var db = mongoose.connect(dbUrl);
 
         // When successfully connected

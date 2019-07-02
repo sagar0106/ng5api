@@ -10,7 +10,7 @@
     var controller = function() {};
 
     function list(req, res, next) {
-        crud.list(Entity, req.options, req.body, function(err, data) {
+        crud.list(Entity, req.query, req.body, function(err, data) {
             if (err) {
                 return next(err);
             }
