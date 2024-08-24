@@ -1,18 +1,18 @@
 (function() {
     'use strict';
-    var config = require('../config/config');
-    var mongoose = require('mongoose');
-    var Entity = mongoose.model('User')
-    var _ = require('lodash');
-    var jwt = require('jsonwebtoken');
-    var crypto = require('crypto')
-    var db = require('mongoskin').db(config.dbconnection);
-    var q = require('q');
-    var controller = function() {};
+    const config = require('../config/config');
+    const mongoose = require('mongoose');
+    const Entity = mongoose.model('User')
+    const _ = require('lodash');
+    const jwt = require('jsonwebtoken');
+    const crypto = require('crypto')
+    const db = require('mongoskin').db(config.dbconnection);
+    const q = require('q');
+    let controller = function() {};
 
     controller.prototype.login = function(req, res, next) {
-        var cipher = crypto.createCipher('aes-256-ctr', req.body.password)
-        var crypted = cipher.update(config.secret, 'utf8', 'hex')
+        const cipher = crypto.createCipher('aes-256-ctr', req.body.password)
+        let crypted = cipher.update(config.secret, 'utf8', 'hex')
         crypted += cipher.final('hex');
         req.body.password = crypted;
         req.body.username = req.body.username.toLowerCase();
@@ -33,9 +33,9 @@
                         message: "Sorry, your account has been deactivated. Please contact your administrator to activate your account."
                     })
                 } else {
-                    var tokenData = _.pick(data._doc, ['_id', 'username', 'firstname', 'lastname']);
-                    var shortUser = _.pick(data._doc, ['username', 'firstname', 'role', '_id']);
-                    var token = jwt.sign(tokenData, config.secret);
+                    const tokenData = _.pick(data._doc, ['_id', 'username', 'firstname', 'lastname']);
+                    const shortUser = _.pick(data._doc, ['username', 'firstname', 'role', '_id']);
+                    const token = jwt.sign(tokenData, config.secret);
                     getUserPermissions(shortUser.role).then(function(permissions) {
                         shortUser.permissions = permissions;
                         req.loginData = {

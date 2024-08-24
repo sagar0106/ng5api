@@ -1,11 +1,15 @@
-var express = require('express');
-var app = express();
-//var mongoose = require('mongoose');
-var bodyParser = require('body-parser');
-
-// mongoose.connect('mongodb://localhost/testDb');
-var mongoose = require('./config/mongoose.js');
-var db = mongoose();
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+const auth_routes = require('./routes/auth.js');
+const module_routes = require('./routes/module');
+const project_routes = require('./routes/project');
+const role_routes = require('./routes/role');
+const toDo_routes = require('./routes/toDo');
+const user_routes = require('./routes/user');
+const tokenService = require('./services/validateToken');
+const mongoose = require('./config/mongoose.js');
+const db = mongoose();
 
 app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -22,7 +26,12 @@ app.use(function(req, res, next) {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-require('./routes/index')(app);
+app.use('/api/auth', auth_routes);
+app.use('/api/module', tokenService.checkToken, module_routes);
+app.use('/api/project', tokenService.checkToken, project_routes);
+app.use('/api/role', tokenService.checkToken, role_routes);
+app.use('/api/toDo', tokenService.checkToken, toDo_routes);
+app.use('/api/user', tokenService.checkToken, user_routes);
 
 app.listen(4000);
 console.log('listening on port 4000');

@@ -1,26 +1,12 @@
-(function() {
-    'use strict';
+const express = require('express');
+const router = express.Router();
+const authService = require('../services/auth');
 
-    //  var user = require('../controllers/user');
-    var _ = require('lodash');
-    var authService = require('../services/auth');
+router.post('/login', authService.login)
+router.post('/validatetoken', authService.validatetoken)
 
-    module.exports = function(app) {
+// router.post('/forgotpassword', authService.forgotpassword)
+// router.post('/changepassword', authService.changepassword)
+// router.post('/requiredpassword', authService.requiredpassword)
 
-        app.route('/login')
-            .post(authService.login);
-
-        // app.route('/forgotpassword')
-        //     .post(authService.forgotpassword);
-
-        // app.route('/changepassword')
-        //     .post(authService.changepassword);
-
-        app.route('/validatetoken')
-            .post(authService.validatetoken);
-
-        // app.route('/requiredpassword')
-        //     .post(authService.requiredpassword);
-
-    }
-})();
+module.exports = router;

@@ -2,7 +2,7 @@
     'use strict';
 
 
-    var crud = function() {};
+    let crud = function() {};
 
     function list(entity, options, body, cb) {
         options = options || {};
